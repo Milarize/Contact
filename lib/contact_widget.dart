@@ -18,16 +18,29 @@ class _ContactWidgetState extends State<ContactWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('My Contact'),
-        ),
-        body: ListView.builder(itemBuilder: (contact,index){
-          return ListTile(
-            leading: CircleAvatar(child:Text(contacts[index].name[0]),),
-            title:Text(contacts[index].name), 
-            subtitle:Text(contacts[index].phone),
-            );
-        },itemCount:contacts.length),
-        floatingActionButton: FloatingActionButton(child:Icon(Icons.add),onPressed:(){},),);
+      appBar: AppBar(
+        title: Text('My Contact'),
+      ),
+      body: ListView.builder(
+          itemBuilder: (contact, index) {
+            return ListTile(
+                leading: CircleAvatar(
+                  child: Text(contacts[index].name[0]),
+                ),
+                title: Text(contacts[index].name),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(contacts[index].phone),
+                    Text(contacts[index].email),
+                  ],
+                ));
+          },
+          itemCount: contacts.length),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      ),
+    );
   }
 }
