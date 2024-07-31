@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:my_contact/contact.dart';
 
-class AddContactWidget extends StatefulWidget {
-  final Function(Contact contact) addContact; 
-  const AddContactWidget({Key? key,required this.addContact}) : super(key: key);
+class EditContactWidget extends StatefulWidget {
+  final Function(Contact contact) editContact; 
+  final Contact contact;
+  const EditContactWidget({Key? key, required this.contact, required this.editContact}) : super(key: key);
 
   @override
-  _AddContactWidgetState createState() => _AddContactWidgetState();
+  _EditContactWidgetState createState() => _EditContactWidgetState();
 }
 
-class _AddContactWidgetState extends State<AddContactWidget> {
+class _EditContactWidgetState extends State<EditContactWidget> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
   late TextEditingController phoneController;
@@ -18,9 +19,9 @@ class _AddContactWidgetState extends State<AddContactWidget> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController();
-    phoneController = TextEditingController();
-    emailController = TextEditingController();
+    nameController = TextEditingController(text: widget.contact.name);
+    phoneController = TextEditingController(text: widget.contact.phone);
+    emailController = TextEditingController(text: widget.contact.email);
   }
 
   @override
@@ -35,7 +36,7 @@ class _AddContactWidgetState extends State<AddContactWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Contact'),
+        title: Text('Edit Contact'),
       ),
       body: Form(
         key: _formKey,
@@ -55,7 +56,7 @@ class _AddContactWidgetState extends State<AddContactWidget> {
                 return null;
               },
             ),
-            SizedBox(height: 16), // Add space between fields
+            SizedBox(height: 16),
             TextFormField(
               controller: phoneController,
               decoration: InputDecoration(
@@ -69,7 +70,7 @@ class _AddContactWidgetState extends State<AddContactWidget> {
                 return null;
               },
             ),
-            SizedBox(height: 16), // Add space between fields
+            SizedBox(height: 16),
             TextFormField(
               controller: emailController,
               decoration: InputDecoration(
@@ -87,14 +88,19 @@ class _AddContactWidgetState extends State<AddContactWidget> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  widget.editContact(Contact(
+                    id: widget.contact.id,
+                    name: nameController.text,
+                    phone: phoneController.text,
+                    email: emailController.text,
+                  ));
                   Navigator.pop(context);
-                  widget.addContact(Contact(id: -1, name: nameController.text, phone: phoneController.text, email: emailController.text));
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Process Data'))
+                    SnackBar(content: Text('Contact Edited')),
                   );
                 }
               },
-              child: Text('Add Contact'),
+              child: Text('Edit Contact'),
             ),
           ],
         ),
