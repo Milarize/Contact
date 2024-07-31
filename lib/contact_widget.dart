@@ -22,7 +22,12 @@ class _ContactWidgetState extends State<ContactWidget> {
           title: Text('My Contact'),
         ),
         body: ListView.builder(itemBuilder: (contact,index){
-          return ListTile(title:Text(contacts[index].name), );
-        },itemCount:contacts.length));
+          return ListTile(
+            leading: CircleAvatar(child:Text(contacts[index].name[0]),),
+            title:Text(contacts[index].name), 
+            subtitle:Text(contacts[index].phone),
+            );
+        },itemCount:contacts.length),
+        floatingActionButton: FloatingActionButton(child:Icon(Icons.add),onPressed:(){},),);
   }
 }
