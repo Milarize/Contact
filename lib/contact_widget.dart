@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_contact/add_contact_widget.dart';
 import 'package:my_contact/contact.dart';
 
 class ContactWidget extends StatefulWidget {
@@ -38,9 +39,14 @@ class _ContactWidgetState extends State<ContactWidget> {
           },
           itemCount: contacts.length),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
-      ),
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return AddContactWidget();
+              },
+            ));
+          }),
     );
   }
 }
